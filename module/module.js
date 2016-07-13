@@ -2,7 +2,7 @@ var fs = require('fs');
 
 module.exports = (function () {
 
-    var dbFilePath = './data1/data.json';
+    var dbFilePath = './data/data.json';
     var getDataFromFile = function (path) {
         try {
             var result = fs.readFileSync(path, 'utf8');
@@ -11,18 +11,17 @@ module.exports = (function () {
             return [];
         }
     };
-    var data = getDataFromFile(dbFilePath);
+    
 
-    function getAllItems() {
+    var getAllItems = function() {
         var result = [];
-
         for (var i = 0; i < data.length; ++i) {
             result.push(data[i]);
         }
         return result;
     }; 
 
-    function displayAllItems() {
+    var displayAllItems = function() {
         return getAllItems();   
     };
 
@@ -38,13 +37,13 @@ module.exports = (function () {
     var searchByapartmentNumber = function(apartmentNumber){
         var result = [];
         for (var i = 0; i < data.length; ++i) {
-            if(data[i].person.adress.apartment == parseInt(apartmentNumber){
+            if(data[i].person.adress.apartment == parseInt(apartmentNumber)){
                 result.push(data[i]);
             }
         }
         return result;
     };
-
+    var data = getDataFromFile(dbFilePath);
     return {
         getAllItems: getAllItems,
         displayAllItems: displayAllItems,
