@@ -1,7 +1,7 @@
 var bodyParser = require("body-parser");
 var express = require('express');
 var app = express();
-var appView = require('./module/appView.js');
+var appView = require('./views/appView.js');
 var module = require('./module/module.js');
 
 
@@ -20,12 +20,14 @@ app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
   res.render('pages/index')
 });
-app.get('/all', function (req, res) {
-	res.send(appView.displayAllItems(req.query));
+app.get('/user', function(req, res) {
+  res.render('pages/user')
 });
-app.get('/db/:id', function(req, res) {
-  var data = appView.displayAllItems(req.query);
-  res.render('pages/db', {ide: req.params.id, data:data});
+app.get('/all', function(req, res) {	
+    res.send(module.displayAll(req.query) );
+});
+app.get('/user/:id', function(req, res) {	
+	res.send(module.displayId(req.params.id));
 });
 
 

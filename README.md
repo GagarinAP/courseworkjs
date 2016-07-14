@@ -13,6 +13,7 @@
 Файл _data.json_:
 ``` JSON
 {
+  "id": "value",
   "person": {
     "name": "value",
     "soname": "value",

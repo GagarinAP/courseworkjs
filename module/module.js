@@ -11,44 +11,29 @@ module.exports = (function () {
             return [];
         }
     };
+    var data = getDataFromFile(dbFilePath);
     
-
-    var getAllItems = function() {
+    function displayAll() {
         var result = [];
         for (var i = 0; i < data.length; ++i) {
             result.push(data[i]);
-        }
+        }        
         return result;
+    };  
+    
+    function displayId(id) {
+        var result = [];
+        for (var i = 0; i < data.length; ++i) {
+            if(data[i].id == parseInt(id)){
+                result.push(data[i]);
+            }
+        }        
+        return result;  
     }; 
 
-    var displayAllItems = function() {
-        return getAllItems();   
-    };
-
-    var searchBysoname = function(soname){
-        var result = [];
-        for (var i = 0; i < data.length; ++i) {
-            if(data[i].person.soname == soname){
-                result.push(data[i]);
-            }
-        }
-        return result;
-    };
-    var searchByapartmentNumber = function(apartmentNumber){
-        var result = [];
-        for (var i = 0; i < data.length; ++i) {
-            if(data[i].person.adress.apartment == parseInt(apartmentNumber)){
-                result.push(data[i]);
-            }
-        }
-        return result;
-    };
-    var data = getDataFromFile(dbFilePath);
     return {
-        getAllItems: getAllItems,
-        displayAllItems: displayAllItems,
-        searchBysoname:searchBysoname,
-        searchByapartmentNumber:searchByapartmentNumber
+        displayAll: displayAll,
+        displayId: displayId
     };
 
 })();
