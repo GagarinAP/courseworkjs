@@ -1,6 +1,6 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.2.5",  
+  "name": "osbb-application",
+  "version": "0.0.1",  
   "dependencies": {
     "ejs": "2.4.1",
     "express": "4.13.3",
