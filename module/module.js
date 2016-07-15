@@ -39,7 +39,14 @@ module.exports = (function () {
             result.push(data[i].person.soname);
         }   
         return result;
-    };    
+    };   
+    var getUserDate = function(id){      
+        var result = [];
+        for (var i = 0; i < 12; ++i) {
+            result.push(data[id].cost.date.year[0] + '.' + data[id].cost.date.month[i]);
+        }   
+        return result;
+    };  
     var getAverageOfGas = function(){
         var result = [];
         for (var i = 0; i < data.length; ++i) {
@@ -51,11 +58,11 @@ module.exports = (function () {
     };
 
     
-    var getAverageOfGas1 = function(id){
+    var getAverageOfGasId = function(id){
         var result = [];
         
             for (var j = 0; j < 12; ++j) {        
-                result.push(_.sum(data[id].cost.gas[j]) / 12);
+                result.push(data[id].cost.gas[j]);
             }            
                       
         return result;
@@ -104,15 +111,15 @@ module.exports = (function () {
 
     var getChartData1 = function (id) {
         //var id = location.search.split('id=')[1];
-            var userlist = displayId(id);
-            var appartments = getAverageOfGas1(id);
+            var userdate = getUserDate(id);
+            var appartments = getAverageOfGasId(id);
             var labels = [];
             var dataStat = [];
             var backGroundColors = [];
             var borderColors = [];
-            for (var i = 0; i < userlist.length; ++i) {
-                labels.push(userlist[i].person.soname);                
-                dataStat.push(appartments[i]); 
+            for (var i = 0; i < userdate.length; ++i) {
+                labels.push(userdate[i]);                               
+                dataStat.push(appartments[i]);                
                 backGroundColors.push('rgba(83, 47, 140, 0.3)');
                 borderColors.push('rgba(0, 0, 0, 1)');
             }

@@ -14,7 +14,7 @@ app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(__dirname + '/public'));
 
-// views is directory for all template files
+// routes for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -31,8 +31,8 @@ app.get('/chart', function (req, res) {
   res.send(module.getChartData());
 });
 
-app.get('/chart1', function (req, res) {
-  res.send(module.getChartData1());
+app.get('/chart1/:id', function (req, res) {
+  res.send(module.getChartData1(req.params.id));
 });
 
 app.get('/all', function(req, res) {	
@@ -40,8 +40,11 @@ app.get('/all', function(req, res) {
 });
 app.get('/user/:id', function(req, res) {	
   res.send(module.displayId(req.params.id));
-  //res.send(module.getChartData1(req.params.id));  
+  //res.put(module.getChartData1(req.params.id));   
 });
+/*app.put('/user/:id', function(req, res) {	
+  res.send(module.getChartData1(req.params.id));   
+});*/
 
 
 app.listen(app.get('port'), function() {

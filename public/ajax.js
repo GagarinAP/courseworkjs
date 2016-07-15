@@ -7,8 +7,9 @@ $(function () {
         	//console.log(event);
             $.ajax('/all').done(displayAll);            		
             $.ajax('/user/'+id).done(displayId);
-			$.ajax('/chart').done(addChart);  
-			$.ajax('/chart1').done(addChart1);              
+			$.ajax('/chart').done(addChart); 
+			$.ajax('/chart1/'+id).done(addChart1); 
+			//$.ajax('/chart1').done(addChart1);              
     	};
 
     	var displayAll = function(data) {
@@ -58,7 +59,7 @@ $(function () {
         };
 
         var addChart1 = function (data) {
-            var ctx1 = document.getElementById("appartment-chart1");
+            var ctx1 = document.getElementById("appartment-chart-id");
             var myChart1 = new Chart(ctx1, data);
         };
 
