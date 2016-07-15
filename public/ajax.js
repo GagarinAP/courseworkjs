@@ -7,7 +7,8 @@ $(function () {
         	//console.log(event);
             $.ajax('/all').done(displayAll);            		
             $.ajax('/user/'+id).done(displayId);
-			$.ajax('/chart').done(addChart);                
+			$.ajax('/chart').done(addChart);  
+			$.ajax('/chart1').done(addChart1);              
     	};
 
     	var displayAll = function(data) {
@@ -32,8 +33,8 @@ $(function () {
 		};
 
 		var displayId = function(data) {
-			var result = /*'<h2>User: '+ data[0].person.name + ' ' + data[0].person.soname + '</h2>' + 
-						 '<h2>Adress: ' + data[0].person.adress.street + ' ' + data[0].person.adress.number + ' / ' + data[0].person.adress.apartment + '</h2>' +*/
+			var result = '<h2>User: '+ data[0].person.name + ' ' + data[0].person.soname + '</h2>' + 
+						 '<h2>Adress: ' + data[0].person.adress.street + ' ' + data[0].person.adress.number + ' / ' + data[0].person.adress.apartment + '</h2>' +
 						 '<table class="table">' +
 						 '<thead><tr><th>id</th><th>name</th><th>soname</th><th>town</th><th>street</th><th>number</th><th>apartment</th></thead>' +
 						 '<tbody>';
@@ -54,6 +55,11 @@ $(function () {
 		var addChart = function (data) {
             var ctx = document.getElementById("appartment-chart");
             var myChart = new Chart(ctx, data);
+        };
+
+        var addChart1 = function (data) {
+            var ctx1 = document.getElementById("appartment-chart1");
+            var myChart1 = new Chart(ctx1, data);
         };
 
 		init();

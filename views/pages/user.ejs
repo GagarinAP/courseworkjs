@@ -25,12 +25,11 @@
   <hr>
   <div class="row">
     <div class="col-md-6">
-    <div id="displayAll"></div>
-      <div id="displayId"></div>
+      <div id="displayAll"></div>
+      
       <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
       <ul>
         <li>This app was deployed to OSBB App, either using Git or by using <a href="/">OSBB App Button</a> on the repository.</li>
-
         <li>When OSBB App received the source code, it fetched all the dependencies in the <a href="/">package.json</a>, creating a deployable slug.</li>
         <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
         <li>You can scale your app, manage it, and deploy over <a href="/">150 add-on services</a>, from the Dashboard or CLI.</li>
@@ -38,7 +37,9 @@
     </div>
     <div class="col-md-6">
       <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
+      <div id="displayId"></div>
       <canvas id="appartment-chart" width="600" height="400"></canvas>
+      <canvas id="appartment-chart1" width="600" height="400"></canvas>
       <ul>
         <li>If you are following the <a href="/">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
         <li>If you deployed this app by deploying the OSBB App Button, then in a command line shell, run:</li>
@@ -48,16 +49,10 @@
           <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the OSBB App app with the repository</li>
           <li>You'll now be set up to run the app locally, or <a href="/">deploy changes</a> to OSBB App</li>
         </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="/">OSBB App</a></li>
-        <li><a href="/">OSBB App Dev Center</a></li>
-        <li><a href="/">Getting Started with Node on OSBB App</a></li>
-        <li><a href="/">Deploying Node Apps on OSBB App</a></li>
-      </ul>
+      </ul>      
     </div>
   </div> <!-- row -->
+
    <div class="alert alert-info text-center" role="alert">
     Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with OSBB App, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
   </div>

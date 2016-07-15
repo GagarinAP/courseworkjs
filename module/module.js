@@ -50,6 +50,17 @@ module.exports = (function () {
         return result;
     };
 
+    
+    var getAverageOfGas1 = function(id){
+        var result = [];
+        
+            for (var j = 0; j < 12; ++j) {        
+                result.push(_.sum(data[id].cost.gas[j]) / 12);
+            }            
+                      
+        return result;
+    };
+
     var getChartData = function () {
             var userlist = displayAll();
             var appartments = getAverageOfGas();
@@ -58,7 +69,49 @@ module.exports = (function () {
             var backGroundColors = [];
             var borderColors = [];
             for (var i = 0; i < userlist.length; ++i) {
-                labels.push(userlist[i].person.name);                
+                labels.push(userlist[i].person.soname);                
+                dataStat.push(appartments[i]); 
+                backGroundColors.push('rgba(83, 47, 140, 0.3)');
+                borderColors.push('rgba(0, 0, 0, 1)');
+            }
+
+            return {
+              type: "bar",
+              data: {
+                  labels: labels,
+                  datasets: [
+                      {
+                          label: "Gas",
+                          data: dataStat,
+                          backgroundColor: backGroundColors,
+                          borderColor: borderColors,
+                          borderWidth: 1
+                      }
+                  ]
+              },
+              options: {
+                  responsive: true,
+                  scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }                  
+              }
+            };  
+    };
+
+    var getChartData1 = function (id) {
+        //var id = location.search.split('id=')[1];
+            var userlist = displayId(id);
+            var appartments = getAverageOfGas1(id);
+            var labels = [];
+            var dataStat = [];
+            var backGroundColors = [];
+            var borderColors = [];
+            for (var i = 0; i < userlist.length; ++i) {
+                labels.push(userlist[i].person.soname);                
                 dataStat.push(appartments[i]); 
                 backGroundColors.push('rgba(83, 47, 140, 0.3)');
                 borderColors.push('rgba(0, 0, 0, 1)');
@@ -96,7 +149,8 @@ module.exports = (function () {
     return {
         displayAll: displayAll,
         displayId: displayId,
-        getChartData:getChartData
+        getChartData:getChartData,
+        getChartData1:getChartData1
     };
 
 })();
