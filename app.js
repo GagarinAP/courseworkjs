@@ -1,8 +1,9 @@
 var bodyParser = require("body-parser");
 var express = require('express');
 var app = express();
-var appView = require('./views/appView.js');
+var appView = require('./module/appView.js');
 var module = require('./module/module.js');
+var _ = require('lodash-node');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,11 +24,17 @@ app.get('/', function(req, res) {
 app.get('/user', function(req, res) {
   res.render('pages/user')
 });
+app.get('/help', function(req, res) {
+  res.render('pages/help')
+});
+app.get('/chart', function (req, res) {
+  res.send(module.getChartData());
+});
 app.get('/all', function(req, res) {	
-    res.send(module.displayAll(req.query) );
+  res.send(module.displayAll(req.query) );
 });
 app.get('/user/:id', function(req, res) {	
-	res.send(module.displayId(req.params.id));
+  res.send(module.displayId(req.params.id));
 });
 
 
