@@ -17,6 +17,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+//route for page
 app.get('/', function(req, res) {
   res.render('pages/index');
 });
@@ -29,19 +30,18 @@ app.get('/user', function(req, res) {
 app.get('/help', function(req, res) {
   res.render('pages/help');
 });
+//ajax
 app.get('/chart', function (req, res) {
   res.send(module.getChartData());
 });
-
 app.get('/chartId/:id', function (req, res) {
   res.send(module.getChartDataId(req.params.id));
 });
-
 app.get('/all', function(req, res) {	
-  res.send(module.displayAll(req.query));
+  res.send(module.displayAllId());
 });
 app.get('/user/:id', function(req, res) {	
-  res.send(module.displayId(req.params.id));    
+  res.send(module.displayAllId(req.params.id));    
 });
 
 
