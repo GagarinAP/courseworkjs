@@ -8,18 +8,17 @@ $(function () {
             $.ajax('/all').done(displayAll);            		
             $.ajax('/user/'+id).done(displayId);
 			$.ajax('/chart').done(addChart); 
-			$.ajax('/chart1/'+id).done(addChart1); 
+			$.ajax('/chartId/'+id).done(addChartId); 
 			//$.ajax('/chart1').done(addChart1);              
     	};
 
     	var displayAll = function(data) {
 			var result = '<h2>Adress: ' + data[0].person.adress.town + ' ' + data[0].person.adress.street + ' str. ' + data[0].person.adress.number + '</h2>' +
-						 '<table class="table">' +
+						 '<table class="table table-hover">' +
 						 '<thead><tr><th>id</th><th>name</th><th>soname</th><th>town</th><th>street</th><th>number</th><th>apartment</th></thead>' +
 						 '<tbody>';
 
-			for (var i = 0; i < data.length; ++i) {
-					result += '<tr><td>' + data[i].id + '</td>';
+			for (var i = 0; i < data.length; ++i) {					
 					result += '<td>' + data[i].person.name + ' ' + data[i].person.soname + '</td>';					
 					result += '<td>' + data[i].person.adress.town + '</td>';
 					result += '<td>' + data[i].person.adress.street + '</td>';
@@ -29,19 +28,18 @@ $(function () {
 					result += '</tr>';
 				}
 
-			result += '</tbody></table>';
+			result += '</tbody></table><div onclick="LoadMore()">Load more</div>';
 			$('#displayAll').html(result);
 		};
 
 		var displayId = function(data) {
-			var result = '<h2>User: '+ data[0].person.name + ' ' + data[0].person.soname + '</h2>' + 
+			var result = '<h2>User: </h2><h2>'+ data[0].person.name + ' ' + data[0].person.soname + '</h3>' + 
 						 '<h2>Adress: ' + data[0].person.adress.street + ' ' + data[0].person.adress.number + ' / ' + data[0].person.adress.apartment + '</h2>' +
-						 '<table class="table">' +
+						 '<table class="table table-hover">' +
 						 '<thead><tr><th>id</th><th>name</th><th>soname</th><th>town</th><th>street</th><th>number</th><th>apartment</th></thead>' +
 						 '<tbody>';
 					
-				for (var i = 0; i < data.length; ++i) {					
-					result += '<tr><td>' + data[i].id + '</td>';					
+				for (var i = 0; i < data.length; ++i) {										
 					result += '<td>' + data[i].person.adress.town + '</td>';
 					result += '<td>' + data[i].person.adress.street + '</td>';
 					result += '<td>' + data[i].person.adress.number + '</td>';
@@ -58,10 +56,13 @@ $(function () {
             var myChart = new Chart(ctx, data);
         };
 
-        var addChart1 = function (data) {
+        var addChartId = function (data) {
             var ctx1 = document.getElementById("appartment-chart-id");
             var myChart1 = new Chart(ctx1, data);
         };
+        /*var LoadMore = function(){
+
+        };*/
 
 		init();
 	    /*return {

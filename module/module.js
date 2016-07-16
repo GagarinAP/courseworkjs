@@ -109,8 +109,7 @@ module.exports = (function () {
             };  
     };
 
-    var getChartData1 = function (id) {
-        //var id = location.search.split('id=')[1];
+    var getChartDataId = function (id) {        
             var userdate = getUserDate(id);
             var appartments = getAverageOfGasId(id);
             var labels = [];
@@ -157,7 +156,7 @@ module.exports = (function () {
         displayAll: displayAll,
         displayId: displayId,
         getChartData:getChartData,
-        getChartData1:getChartData1
+        getChartDataId:getChartDataId
     };
 
 })();

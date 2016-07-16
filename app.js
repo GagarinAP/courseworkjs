@@ -1,9 +1,8 @@
 var bodyParser = require("body-parser");
 var express = require('express');
 var app = express();
-var appView = require('./module/appView.js');
 var module = require('./module/module.js');
-var _ = require('lodash-node');
+var _ = require('lodash');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +20,9 @@ app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
   res.render('pages/index');
 });
+app.get('/users', function(req, res) {
+  res.render('pages/users');
+});
 app.get('/user', function(req, res) {
   res.render('pages/user');
 });
@@ -31,22 +33,19 @@ app.get('/chart', function (req, res) {
   res.send(module.getChartData());
 });
 
-app.get('/chart1/:id', function (req, res) {
-  res.send(module.getChartData1(req.params.id));
+app.get('/chartId/:id', function (req, res) {
+  res.send(module.getChartDataId(req.params.id));
 });
 
 app.get('/all', function(req, res) {	
   res.send(module.displayAll(req.query));
 });
 app.get('/user/:id', function(req, res) {	
-  res.send(module.displayId(req.params.id));
-  //res.put(module.getChartData1(req.params.id));   
+  res.send(module.displayId(req.params.id));    
 });
-/*app.put('/user/:id', function(req, res) {	
-  res.send(module.getChartData1(req.params.id));   
-});*/
+
 
 
 app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+  console.log('App is running on port', app.get('port'));
 });
