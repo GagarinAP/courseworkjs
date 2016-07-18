@@ -44,16 +44,18 @@ module.exports = (function () {
     //Функція приймає параметр та видає массив значень газу по заданому користувачу
     //або параметр відсутній то видає массив середніх значень газу по всіх користувачах;
     var getAverageOfGas = function(id){
-      var result = [];      
+      var resultaver = [];    
+      var result = [];  
       if(id == undefined){
         for (var i = 0; i < data.length; ++i) {
             for (var j = 0; j < 12; ++j) {        
-                result.push((_.sum(data[i].cost.gas[j])) / 12);
+                resultaver.push((_.sum(data[i].cost.gas[j])) / 12);
             }            
         }               
-        return result;
+        return resultaver;
       } else {
-        for (var i = 0; i < 12; ++i) {        
+        for (var i = 0; i < 12; ++i) {
+          //console.log(data[parseInt(id)].cost.gas.length);        
           result.push(data[id].cost.gas[i]);
         }
         return result;

@@ -14,18 +14,14 @@ $(function () {
     	};
 
     	var displayAll = function(data) {
-			var result = '<h2>Adress: ' + data[0].person.adress.town + ' ' + data[0].person.adress.street + ' str. ' + data[0].person.adress.number + '</h2>' +
-						 '<table class="table table-hover">' +
-						 '<thead><tr><th>id</th><th>name</th><th>soname</th><th>town</th><th>street</th><th>number</th><th>apartment</th></thead>' +
+			var result = '<table class="table table-hover">' +
+						 '<thead><tr><th>Власник</th><th>Квартира</th><th>Профіль</th></thead>' +
 						 '<tbody>';
 
 			for (var i = 0; i < data.length; ++i) {					
 					result += '<td>' + data[i].person.name + ' ' + data[i].person.soname + '</td>';					
-					result += '<td>' + data[i].person.adress.town + '</td>';
-					result += '<td>' + data[i].person.adress.street + '</td>';
-					result += '<td>' + data[i].person.adress.number + '</td>';
 					result += '<td>' + data[i].person.adress.apartment + '</td>';
-					result += '<td><a href="http://localhost:3000/user?id=' + i + '">Profile</a></td>';
+					result += '<td><a href="http://localhost:3000/user?id=' + i + '"> детальніше</a></td>';
 					result += '</tr>';
 				}
 
