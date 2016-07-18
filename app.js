@@ -38,17 +38,29 @@ app.get('/search', function(req, res) {
 app.get('/search/:name', function (req, res) {
   res.send(module.searchByCustomer(req.params.name));
 });
-app.get('/chart', function (req, res) {
-  res.send(module.getChartData());
+app.get('/chartGas', function (req, res) {
+  res.send(module.getChartDataGas());
+});
+app.get('/chartEnergy', function (req, res) {
+  res.send(module.getChartDataEnergy());
+});
+app.get('/chartWather', function (req, res) {
+  res.send(module.getChartDataWather());
 });
 app.get('/chartId/:id', function (req, res) {
-  res.send(module.getChartDataId(req.params.id));
+  res.send(module.getChartDataIdGas(req.params.id));
+});
+app.get('/chartId/:id', function (req, res) {
+  res.send(module.getChartDataIdEnergy(req.params.id));
+});
+app.get('/chartId/:id', function (req, res) {
+  res.send(module.getChartDataIdWather(req.params.id));
 });
 app.get('/all', function(req, res) {	
-  res.send(module.displayAllId());
+  res.send(module.displayAll());
 });
 app.get('/user/:id', function(req, res) {	
-  res.send(module.displayAllId(req.params.id));    
+  res.send(module.displayPerson(req.params.id));    
 });
 
 

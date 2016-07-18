@@ -8,7 +8,9 @@ $(function () {
         	
             $.ajax('/all').done(displayAll);            		
             $.ajax('/user/'+id).done(displayId);
-			$.ajax('/chart').done(addChart); 
+			$.ajax('/chartGas').done(addChartGas); 
+			$.ajax('/chartEnergy').done(addChartEnergy);
+			$.ajax('/chartWather').done(addChartWather);
 			$.ajax('/chartId/'+id).done(addChartId);
 			$.ajax('/search/'+name).done(setSearchOutput);
     	};
@@ -49,20 +51,28 @@ $(function () {
 			$('#displayId').html(result);
 		};
 
-		var addChart = function (data) {
-            var ctx = document.getElementById("appartment-chart");
+		var addChartGas = function (data) {
+            var ctx = document.getElementById("appartment-chart-gas");
+            var myChart = new Chart(ctx, data);
+        };
+        var addChartEnergy = function (data) {
+            var ctx = document.getElementById("appartment-chart-energy");
+            var myChart = new Chart(ctx, data);
+        };
+        var addChartWather = function (data) {
+            var ctx = document.getElementById("appartment-chart-wather");
             var myChart = new Chart(ctx, data);
         };
 
         var addChartId = function (data) {
-            var ctx1 = document.getElementById("appartment-chart-id");
-            var myChart1 = new Chart(ctx1, data);
+            var ctx = document.getElementById("appartment-chart-id");
+            var myChart = new Chart(ctx, data);
         };        
 
         var setSearchOutput = function (data) {
         	var name = location.search.split('name=')[1];
             if (!data || data.length === 0) {
-                $('#search').html('<h3><strong>Не знайдено: ' + name + '</strong></h3>');
+                $('#search').html('<h3><strong>Нічого не знайдено по запиту: ' + name + '</strong></h3>');
                 return;
             }
             var result = '<h3>Знайдено: </h3>' + 
