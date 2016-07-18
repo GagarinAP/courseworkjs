@@ -2,6 +2,7 @@ var bodyParser = require("body-parser");
 var express = require('express');
 var app = express();
 var module = require('./module/module.js');
+var appView = require('./module/appView.js');
 var _ = require('lodash');
 
 
@@ -30,7 +31,13 @@ app.get('/user', function(req, res) {
 app.get('/help', function(req, res) {
   res.render('pages/help');
 });
+app.get('/search', function(req, res) {
+  res.render('pages/search');  
+});
 //ajax
+app.get('/search/:name', function (req, res) {
+  res.send(module.searchByCustomer(req.params.name));
+});
 app.get('/chart', function (req, res) {
   res.send(module.getChartData());
 });

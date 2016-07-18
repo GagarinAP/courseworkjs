@@ -17,8 +17,7 @@ module.exports = (function () {
     //Функція приймає параметр та видає массив данних користувача
     //або параметр відсутній то видає массив всіх користувачів;
     var displayAllId = function(ida) {
-      var result = [];
-      //console.log('------------'+ida);
+      var result = [];      
       if(ida === undefined){
         for (var i = 0; i < data.length; ++i) {
           result.push(data[i]);
@@ -41,18 +40,12 @@ module.exports = (function () {
       }   
       return result;
     };   
-    /*var getUserDate = function(id){      
-      var result = [];
-      for (var i = 0; i < 12; ++i) {
-        result.push(data[id].cost.date.year[0] + '.' + data[id].cost.date.month[i]);
-      }   
-      return result;
-    };*/
+    
     //Функція приймає параметр та видає массив значень газу по заданому користувачу
     //або параметр відсутній то видає массив середніх значень газу по всіх користувачах;
     var getAverageOfGas = function(id){
       var result = [];      
-      if(id === undefined){
+      if(id == undefined){
         for (var i = 0; i < data.length; ++i) {
             for (var j = 0; j < 12; ++j) {        
                 result.push((_.sum(data[i].cost.gas[j])) / 12);
@@ -67,9 +60,9 @@ module.exports = (function () {
       }          
     };
 
-    var getChartData = function () {
-            var userlist = displayAllId();
-            var appartments = getAverageOfGas();
+    var getChartData = function (id) {
+            var userlist = displayAllId(id);
+            var appartments = getAverageOfGas(id);
             var labels = [];
             var dataStat = [];
             var backGroundColors = [];
@@ -108,8 +101,7 @@ module.exports = (function () {
             };  
     };
 
-    var getChartDataId = function (id) {        
-            //var userdate = getUserDate(id);
+    var getChartDataId = function (id) {            
             var appartments = getAverageOfGas(id);
             var labels = [];
             var dataStat = [];
@@ -149,12 +141,31 @@ module.exports = (function () {
             };  
     };
 
+    var searchByCustomer = function(name){
+      var result = [];
+      if(name == parseInt(name)){
+        for(var i = 0; i < data.length; ++i) {
+          if(data[i].person.adress.apartment == name) {
+            result.push(data[i]);
+          }
+        }
+        return result;
+      } else {   
+        for(var i = 0; i < data.length; ++i) {
+          if(data[i].person.soname == name) {
+            result.push(data[i]);
+          }
+        }
+        return result;
+      }
+    };
     
 
     return {
         displayAllId: displayAllId,        
         getChartData:getChartData,
-        getChartDataId:getChartDataId
+        getChartDataId:getChartDataId,
+        searchByCustomer: searchByCustomer
     };
 
 })();

@@ -4,11 +4,13 @@ $(function () {
 
         var init = function(event) {
         	var id = location.search.split('id=')[1];	
+        	var name = location.search.split('name=')[1];
         	
             $.ajax('/all').done(displayAll);            		
             $.ajax('/user/'+id).done(displayId);
 			$.ajax('/chart').done(addChart); 
-			$.ajax('/chartId/'+id).done(addChartId);			             
+			$.ajax('/chartId/'+id).done(addChartId);
+			$.ajax('/search/'+name).done(setSearchOutput);
     	};
 
     	var displayAll = function(data) {
@@ -35,7 +37,7 @@ $(function () {
 			var result = '<h5>Користувач: </h5><h2>'+ data[0].person.name + ' ' + data[0].person.soname + '</h3>' + 
 						 '<h5>Адреса: </h5><h2>' + data[0].person.adress.street + ' ' + data[0].person.adress.number + ' кв. ' + data[0].person.adress.apartment + '</h2>' +
 						 '<table class="table table-hover">' +
-						 '<thead><tr><th>id</th><th>name</th><th>soname</th><th>town</th><th>street</th><th>number</th><th>apartment</th></thead>' +
+						 '<thead><tr><th>date</th><th>gas</th><th>energy</th><th>w.hot</th><th>w.cold</th></thead>' +
 						 '<tbody>';
 					
 				for (var i = 0; i < 12; ++i) {
@@ -61,6 +63,19 @@ $(function () {
             var myChart1 = new Chart(ctx1, data);
         };        
 
-		init();	    
+        var setSearchOutput = function (data) {
+        	var name = location.search.split('name=')[1];
+            if (!data || data.length === 0) {
+                $('#search').html('<h3><strong>Не знайдено: ' + name + '</strong></h3>');
+                return;
+            }
+            var result = '<h3>Знайдено: </h3>' + 
+						 '<a href="http://localhost:3000/user?id=' + data[0].id + '"><h2>' + data[0].person.name + ' "' + data[0].person.soname + '" - ' + 
+						 data[0].person.adress.street + ' - ' + data[0].person.adress.number + 
+						 ' кв. ' + data[0].person.adress.apartment + '</h2></a>';			
+			$('#search').html(result);
+        };
+
+		init();			  
 	})();	
 });
