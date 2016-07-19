@@ -11,46 +11,53 @@ $(function () {
 			$.ajax('/chartGas').done(addChartGas); 
 			$.ajax('/chartEnergy').done(addChartEnergy);
 			$.ajax('/chartWather').done(addChartWather);
-			$.ajax('/chartId/'+id).done(addChartId);
+			$.ajax('/chartIdGas/'+id).done(addChartIdGas);
+			$.ajax('/chartIdEnergy/'+id).done(addChartIdEnergy);
+			$.ajax('/chartIdWather/'+id).done(addChartIdWather);
 			$.ajax('/search/'+name).done(setSearchOutput);
     	};
 
     	var displayAll = function(data) {
-			var result = '<table class="table table-hover">' +
-						 '<thead><tr><th>Власник</th><th>Квартира</th><th>Профіль</th></thead>' +
+			var result = '<div class="table-responsive"><table class="table table-striped table-bordered table-hover">' +
+						 '<thead><tr><th class="text-center">#</th><th class="text-center">Власник</th><th class="text-center">Квартира</th><th class="text-center">Профіль</th></thead>' +
 						 '<tbody>';
 
-			for (var i = 0; i < data.length; ++i) {					
-					result += '<td>' + data[i].person.name + ' ' + data[i].person.soname + '</td>';					
-					result += '<td>' + data[i].person.adress.apartment + '</td>';
-					result += '<td><a href="http://localhost:3000/user?id=' + i + '"> детальніше</a></td>';
-					result += '</tr>';
-				}
+			for (var i = 0; i < data.length; ++i) {	
+				result += '<td class="text-center">' + (i + 1) + '</td>';				
+				result += '<td class="text-center">' + data[i].person.name + ' ' + data[i].person.soname + '</td>';					
+				result += '<td class="text-center">' + data[i].person.adress.apartment + '</td>';
+				result += '<td class="text-center"><a href="http://localhost:3000/user?id=' + i + '"> переглянути</a></td>';
+				result += '</tr>';
+			}
 
-			result += '</tbody></table><div onclick="LoadMore()">Load more</div>';
+			result += '</tbody></table></div>';
 			$('#displayAll').html(result);
 		};
 
 		var displayId = function(data) {
-			var result = '<h5>Користувач: </h5><h2>'+ data[0].person.name + ' ' + data[0].person.soname + '</h3>' + 
-						 '<h5>Адреса: </h5><h2>' + data[0].person.adress.street + ' ' + data[0].person.adress.number + ' кв. ' + data[0].person.adress.apartment + '</h2>' +
-						 '<table class="table table-hover">' +
-						 '<thead><tr><th>date</th><th>gas</th><th>energy</th><th>w.hot</th><th>w.cold</th></thead>' +
+			var result = '<h2>Користувач: <strong>' + data[0].person.name + ' ' + data[0].person.soname + '</strong></h2>' + 
+						 '<h3>Квартира №: <strong>' + data[0].person.adress.apartment + '</strong></h3>' +
+						 '<div class="table-responsive"><table class="table table-striped table-bordered table-hover">' +
+						 '<thead><tr><th class="text-center">Місяць</th>'+
+						 '<th class="text-center">Газ</th>'+
+						 '<th class="text-center">Електроенергія</th>'+
+						 '<th class="text-center">Гаряча вода</th>'+
+						 '<th class="text-center">Холодна вода</th></thead>' +
 						 '<tbody>';
 					
-				for (var i = 0; i < 12; ++i) {
-					result += '<td>' + data[0].cost.date.year[0] + '.' + data[0].cost.date.month[i] + '</td>';										
-					result += '<td>' + data[0].cost.gas[i] + '</td>';
-					result += '<td>' + data[0].cost.energy[i] + '</td>';
-					result += '<td>' + data[0].cost.wather.hot[i] + '</td>';
-					result += '<td>' + data[0].cost.wather.cold[i] + '</td>';					
-					result += '</tr>';
-				}
+			for (var i = 0; i < 12; ++i) {
+				result += '<td class="text-center">' + data[0].cost.date.year[0] + '.' + data[0].cost.date.month[i] + '</td>';										
+				result += '<td class="text-center">' + data[0].cost.gas[i] + '</td>';
+				result += '<td class="text-center">' + data[0].cost.energy[i] + '</td>';
+				result += '<td class="text-center">' + data[0].cost.wather.hot[i] + '</td>';
+				result += '<td class="text-center">' + data[0].cost.wather.cold[i] + '</td>';					
+				result += '</tr>';
+			}
 
-			result += '</tbody></table>';
+			result += '</tbody></table></div>';
 			$('#displayId').html(result);
 		};
-
+		//Графіки по всіх користувачах
 		var addChartGas = function (data) {
             var ctx = document.getElementById("appartment-chart-gas");
             var myChart = new Chart(ctx, data);
@@ -63,12 +70,20 @@ $(function () {
             var ctx = document.getElementById("appartment-chart-wather");
             var myChart = new Chart(ctx, data);
         };
-
-        var addChartId = function (data) {
-            var ctx = document.getElementById("appartment-chart-id");
+        //Графіки по заданому користувачу
+        var addChartIdGas = function (data) {
+            var ctx = document.getElementById("appartment-chart-id-gas");
             var myChart = new Chart(ctx, data);
-        };        
-
+        }; 
+        var addChartIdEnergy = function (data) {
+            var ctx = document.getElementById("appartment-chart-id-energy");
+            var myChart = new Chart(ctx, data);
+        };
+        var addChartIdWather = function (data) {
+            var ctx = document.getElementById("appartment-chart-id-wather");
+            var myChart = new Chart(ctx, data);
+        };       
+        //Форма пошуку та результату
         var setSearchOutput = function (data) {
         	var name = location.search.split('name=')[1];
             if (!data || data.length === 0) {
@@ -76,7 +91,7 @@ $(function () {
                 return;
             }
             var result = '<h3>Знайдено: </h3>' + 
-						 '<a href="http://localhost:3000/user?id=' + data[0].id + '"><h2>' + data[0].person.name + ' "' + data[0].person.soname + '" - ' + 
+						 '<a href="http://localhost:3000/user?id=' + data[0].id + '"><h2>' + data[0].person.name + ' ' + data[0].person.soname + ' - ' + 
 						 data[0].person.adress.street + ' - ' + data[0].person.adress.number + 
 						 ' кв. ' + data[0].person.adress.apartment + '</h2></a>';			
 			$('#search').html(result);

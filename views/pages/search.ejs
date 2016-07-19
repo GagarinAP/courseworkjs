@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
   <% include ../partials/header.ejs %>
+  <title><%= title %></title>
 </head>
 
 <body>
@@ -19,11 +20,13 @@
 <div class="container">  
   <hr>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div id="search"></div>
     </div>
   </div>
-  <hr>   
+  <hr> 
+  <div class="alert alert-info text-center" role="alert">    
+  </div>  
 </div>
 
 <% include ../partials/scripts.ejs %>
