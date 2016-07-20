@@ -2,6 +2,7 @@ var bodyParser = require("body-parser");
 var express = require('express');
 var app = express();
 var module = require('./module/module.js');
+
 var _ = require('lodash');
 
 
@@ -30,6 +31,11 @@ app.get('/user', function(req, res) {
 app.get('/search', function(req, res) {
   res.render('pages/search', {title:'Пошук ОСББ'});  
 });
+app.get('/add', function(req, res) {
+  res.render('pages/add', {title:'ADD'});  
+});
+
+
 //Пошук, вивід всіх та по конкретному юзеру
 app.get('/search/:name', function (req, res) {
   res.send(module.searchByCustomer(req.params.name));
@@ -61,6 +67,10 @@ app.get('/chartIdWather/:id', function (req, res) {
 });
 
 
+
+app.post('/record', function (req, res) {
+    res.send(module.addRecord(req.body)) ;
+});
 
 
 app.listen(app.get('port'), function() {

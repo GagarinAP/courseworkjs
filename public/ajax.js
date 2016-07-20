@@ -1,21 +1,20 @@
 $(function () {
 
     window.moduleApp = (function () {
-
         var init = function(event) {
         	var id = location.search.split('id=')[1];	
         	var name = location.search.split('name=')[1];
         	
             $.ajax('/all').done(displayAll);            		
             $.ajax('/user/'+id).done(displayId);
-			$.ajax('/chartGas').done(addChartGas); 
+            $.ajax('/chartGas').done(addChartGas); 
 			$.ajax('/chartEnergy').done(addChartEnergy);
 			$.ajax('/chartWather').done(addChartWather);
 			$.ajax('/chartIdGas/'+id).done(addChartIdGas);
 			$.ajax('/chartIdEnergy/'+id).done(addChartIdEnergy);
 			$.ajax('/chartIdWather/'+id).done(addChartIdWather);
 			$.ajax('/search/'+name).done(setSearchOutput);
-    	};
+    	};        
 
     	var displayAll = function(data) {
 			var result = '<div class="table-responsive"><table class="table table-striped table-bordered table-hover">' +
@@ -29,8 +28,8 @@ $(function () {
 				result += '<td class="text-center"><a href="http://localhost:3000/user?id=' + i + '"> переглянути</a></td>';
 				result += '</tr>';
 			}
-
-			result += '</tbody></table></div>';
+			
+			result += '</tbody></table></div>' + '<a href="/add">Додати користувача</a>';
 			$('#displayAll').html(result);
 		};
 
@@ -97,6 +96,33 @@ $(function () {
 			$('#search').html(result);
         };
 
-		init();			  
+
+
+
+        var addRecord = function () {
+            var namefromform = $('form[action="record"] > input[name="nameUser"]').val();
+            var soname = $('input[name="soname"]').val();
+            var appartment = $('input[name="appartment"]').val();
+            
+            var record = {
+                name: namefromform,
+                soname: soname,
+                appartment: appartment
+            };
+            $.ajax('/record', {
+                method: 'POST',
+                data: record
+            }).done(setAddMessage);
+        };
+        
+        var setAddMessage = function (data) {
+            var message = (data.success) ? 'Record added' : 'Failed to add record';
+            $('#post-record-message').text(message);
+        };
+
+		init();
+		return{
+			addRecord:addRecord
+		}		  
 	})();	
 });
