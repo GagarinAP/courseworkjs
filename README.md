@@ -63,14 +63,17 @@
 ##Перший запуск
 ```
 1. Скачати репозиторій:
-git clone https://github.com/GagarinAP/courseworkjs.git
+	git clone https://github.com/GagarinAP/courseworkjs.git
 
 2. Перейти в папку з проектом:
-cd courseworkjs
+	cd courseworkjs
 
 3. Викачати залежності:
-npm i
+	npm i
 
 4. Запустити сервер:
-node app.js
+	node app.js
+
+4. Сайт буде доступний за такою адресою:
+	<a href="http://localhost:3000/">http://localhost:3000/</a>
 ```
