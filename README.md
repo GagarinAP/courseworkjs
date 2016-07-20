@@ -75,5 +75,5 @@
 	node app.js
 
 4. Сайт буде доступний за такою адресою:
-	<a href="http://localhost:3000/">http://localhost:3000/</a>
+	http://localhost:3000/
 ```
