@@ -6,52 +6,43 @@
 </head>
 
 <body>
-
-  <% include ../partials/nav.ejs %>
-
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="img/lang-logo.png">
-    </a>
-    <!-- <h1>ОСББ</h1>
-    <h3>в м.Рівне по вул.Міцкевича 32</h3>
-    <p>Персональна статистика та моніторинг витрат користува будинку: газ, електроенергія, гаряча та холодна вода.</p> -->
-    
+<% include ../partials/nav.ejs %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <a href="/" class="lang-logo">
+        <img src="img/lang-logo.png">
+      </a>     
+    </div>
   </div>
-</div>
 <div class="container">
   <div class="alert alert-info text-center" role="alert">
-    Графіки показують щомісячні витрати газу, електроенергії чи води по конкретному користувачу!
+    Форма дозволяє додати власника та номер квартири.
   </div>
   <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <div id="displayId"></div>
+  <div class="row">  
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content text-center">
+          <p><div id="post-record-message"></div></p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-      <!-- <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>      
-      <canvas id="appartment-chart-id-gas" width="600" height="400"></canvas>
-      <canvas id="appartment-chart-id-energy" width="600" height="400"></canvas>
-      <canvas id="appartment-chart-id-wather" width="600" height="400"></canvas> -->
-      <form method="POST" action="record">
-                <div id="post-record-message"></div>
-                <label>Enter name</label>
-                <input type="text" name="nameUser"/>
-                <label>Enter soname</label>
-                <input type="text" name="soname"/>
-                <label>Enter appartment number</label>
-                <input type="text" name="appartment"/>                
-                <div>
-                    <div class="button" onclick="window.moduleApp.addRecord()">Add record</div>
-                </div>
-            </form>
+    <div class="col-md-4">
+      <form class="form" role="form" method="POST" action="record">        
+        <div class="form-group">
+          <label class="control-label">Імя</label>
+          <input type="text" class="form-control" name="nameuser">          
+          <label class="control-label">Фамілія</label>
+          <input type="text" class="form-control" name="soname">         
+          <label class="control-label">Номер квартири</label>
+          <input type="text" class="form-control" name="appartment">          
+        </div>
+        <div type="submit" data-toggle="modal" data-target=".bs-example-modal-sm" role="button" class="btn btn-primary" onclick="window.moduleApp.addRecord()">Додати</div>
+      </form>
     </div>
-  </div>
-   <div class="alert alert-info text-center" role="alert">
-  </div>
+  </div>     
 </div>
-
+<% include ../partials/footer.ejs %>
 <% include ../partials/scripts.ejs %>
 </body>
 </html>

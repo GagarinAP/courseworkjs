@@ -2,7 +2,6 @@ var bodyParser = require("body-parser");
 var express = require('express');
 var app = express();
 var module = require('./module/module.js');
-
 var _ = require('lodash');
 
 
@@ -18,7 +17,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-//route for page
+//Роути на сторінки
 app.get('/', function(req, res) {
   res.render('pages/index', {title:'Головна ОСББ'});
 });
@@ -32,7 +31,7 @@ app.get('/search', function(req, res) {
   res.render('pages/search', {title:'Пошук ОСББ'});  
 });
 app.get('/add', function(req, res) {
-  res.render('pages/add', {title:'ADD'});  
+  res.render('pages/add', {title:'Додавання власника ОСББ'});  
 });
 
 
@@ -67,9 +66,9 @@ app.get('/chartIdWather/:id', function (req, res) {
 });
 
 
-
+//Додавання користувача
 app.post('/record', function (req, res) {
-    res.send(module.addRecord(req.body)) ;
+    res.send(module.addRecordDate(req.body));    
 });
 
 

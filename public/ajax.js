@@ -1,5 +1,4 @@
 $(function () {
-
     window.moduleApp = (function () {
         var init = function(event) {
         	var id = location.search.split('id=')[1];	
@@ -14,22 +13,19 @@ $(function () {
 			$.ajax('/chartIdEnergy/'+id).done(addChartIdEnergy);
 			$.ajax('/chartIdWather/'+id).done(addChartIdWather);
 			$.ajax('/search/'+name).done(setSearchOutput);
-    	};        
-
+    	};
     	var displayAll = function(data) {
 			var result = '<div class="table-responsive"><table class="table table-striped table-bordered table-hover">' +
 						 '<thead><tr><th class="text-center">#</th><th class="text-center">Власник</th><th class="text-center">Квартира</th><th class="text-center">Профіль</th></thead>' +
 						 '<tbody>';
-
 			for (var i = 0; i < data.length; ++i) {	
 				result += '<td class="text-center">' + (i + 1) + '</td>';				
 				result += '<td class="text-center">' + data[i].person.name + ' ' + data[i].person.soname + '</td>';					
 				result += '<td class="text-center">' + data[i].person.adress.apartment + '</td>';
 				result += '<td class="text-center"><a href="http://localhost:3000/user?id=' + i + '"> переглянути</a></td>';
 				result += '</tr>';
-			}
-			
-			result += '</tbody></table></div>' + '<a href="/add">Додати користувача</a>';
+			}			
+			result += '</tbody></table></div>' + '<a href="/add" role="button" class="btn btn-primary btn-lg btn-block">Додати</a>';
 			$('#displayAll').html(result);
 		};
 
@@ -42,8 +38,7 @@ $(function () {
 						 '<th class="text-center">Електроенергія</th>'+
 						 '<th class="text-center">Гаряча вода</th>'+
 						 '<th class="text-center">Холодна вода</th></thead>' +
-						 '<tbody>';
-					
+						 '<tbody>';					
 			for (var i = 0; i < 12; ++i) {
 				result += '<td class="text-center">' + data[0].cost.date.year[0] + '.' + data[0].cost.date.month[i] + '</td>';										
 				result += '<td class="text-center">' + data[0].cost.gas[i] + '</td>';
@@ -52,10 +47,10 @@ $(function () {
 				result += '<td class="text-center">' + data[0].cost.wather.cold[i] + '</td>';					
 				result += '</tr>';
 			}
-
 			result += '</tbody></table></div>';
 			$('#displayId').html(result);
 		};
+
 		//Графіки по всіх користувачах
 		var addChartGas = function (data) {
             var ctx = document.getElementById("appartment-chart-gas");
@@ -95,17 +90,13 @@ $(function () {
 						 ' кв. ' + data[0].person.adress.apartment + '</h2></a>';			
 			$('#search').html(result);
         };
-
-
-
-
+        //Додавання користувача
         var addRecord = function () {
-            var namefromform = $('form[action="record"] > input[name="nameUser"]').val();
+            var name = $('input[name="nameuser"]').val();
             var soname = $('input[name="soname"]').val();
-            var appartment = $('input[name="appartment"]').val();
-            
+            var appartment = $('input[name="appartment"]').val();            
             var record = {
-                name: namefromform,
+                name: name,
                 soname: soname,
                 appartment: appartment
             };
@@ -113,10 +104,9 @@ $(function () {
                 method: 'POST',
                 data: record
             }).done(setAddMessage);
-        };
-        
+        };        
         var setAddMessage = function (data) {
-            var message = (data.success) ? 'Record added' : 'Failed to add record';
+            var message = (data.success) ? 'Дані додано' : 'Щось пішло не так!!! Дані не додано.';
             $('#post-record-message').text(message);
         };
 

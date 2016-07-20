@@ -4,11 +4,8 @@
   <% include ../partials/header.ejs %>
   <title><%= title %></title>
 </head>
-
 <body>
-
-  <% include ../partials/nav.ejs %>
-
+<% include ../partials/nav.ejs %>
 <div class="jumbotron text-center">
   <div class="container">
     <a href="/" class="lang-logo">
@@ -16,8 +13,7 @@
     </a>
     <h1>ОСББ</h1>
     <h3>в м.Рівне по вул.Міцкевича 32</h3>
-    <p>Персональна статистика та моніторинг витрат користува будинку: газ, електроенергія, гаряча та холодна вода.</p>
-    
+    <p>Персональна статистика та моніторинг витрат користува будинку: газ, електроенергія, гаряча та холодна вода.</p>    
   </div>
 </div>
 <div class="container">
@@ -35,11 +31,9 @@
       <canvas id="appartment-chart-id-energy" width="600" height="400"></canvas>
       <canvas id="appartment-chart-id-wather" width="600" height="400"></canvas>
     </div>
-  </div>
-   <div class="alert alert-info text-center" role="alert">
-  </div>
+  </div>   
 </div>
-
+<% include ../partials/footer.ejs %>
 <% include ../partials/scripts.ejs %>
 </body>
 </html>

@@ -4,6 +4,7 @@ var _ = require('lodash');
 module.exports = (function () {
 
     var dbFilePath = './data/data.json';
+
     var getDataFromFile = function (path) {
       try {
         var result = fs.readFileSync(path, 'utf8');
@@ -105,7 +106,7 @@ module.exports = (function () {
       var result = [];     
       for (var i = 0; i < data.length; ++i) {
         for (var j = 0; j < 12; ++j) {
-          if(data[i].id == parseInt(id)) {               
+          if(data[i].id == parseInt(id)) {              
             result.push(data[i].cost.wather.cold[j]);
           }
         }
@@ -127,7 +128,7 @@ module.exports = (function () {
       var result = [];        
       for (var i = 0; i < data.length; ++i) {
         for (var j = 0; j < 12; ++j) {
-          if(data[i].id == parseInt(id)) {               
+          if(data[i].id == parseInt(id)) {            
             result.push(data[i].cost.date.year[0]+'.'+data[i].cost.date.month[j]);
           }
         }
@@ -447,156 +448,162 @@ module.exports = (function () {
       }
     };
 
-
+    var addRecordDate = function (record) {
+      var isOk = addRecord(record);
+      return (isOk) ? { success: true } : { success: false };
+    };
 
     var prepareRecord = function (params) {            
-            var result = {};            
-            result.id = data.length + 1;            
-            var person = getPersonByNameAndSoname(params.name, params.soname);            
-            var adress = getAdressByTownStreetNumberAndApartment('Rivne','Mickevich','32',params.appartment);
-            var date = getCostByDate();
-            var wather = getCostByWather();  
-            var cost = getCostByGasAndEnergy();
-                   
-            result.person = person;                       
-            result.person.adress = adress;
+      var result = {};            
             
-            result.cost = cost;
-            result.cost.date = date;
-            result.cost.wather = wather;
+      var userId = getIdByUser();            
+      var person = getPersonByNameAndSoname(params.name, params.soname);            
+      var adress = getAdressByTownStreetNumberAndApartment('Rivne','Mickevich','32',params.appartment);
+      var date = getCostByDate();
+      var wather = getCostByWather();  
+      var cost = getCostByGasAndEnergy();
             
-            
-            
-            console.log(result);        
-            return result;
-        };
+      result = userId;
+      result.person = person;                       
+      result.person.adress = adress;
+      result.cost = cost;
+      result.cost.date = date;
+      result.cost.wather = wather;           
+                
+      return result;
+    };
+    var getIdByUser = function () {
+      var result = {};
+      var key = data.length-1;
+      for(var i = 0; i < data.length; ++i) {
+        if (data[i].id === key) {
+          result = data[i].id;
+        }
+      }
+      result = {
+        id: ++key                
+      };
+      return result;
+    };
+    var validateParams = function (params) {
+      return (
+        (params.name && params.name.match(/^(.*[a-zA-Z ])$/)) &&
+        (params.soname && params.soname.match(/^(.*[a-zA-Z ])$/)) && 
+        (params.appartment && params.appartment.match(/[0-9]/)) 
+      );
+    };
+    var getAdressByTownStreetNumberAndApartment = function (town,street,number,apartment) {
+      var result = null;
+      for(var i = 0; i < data.length; ++i) {
+        if (data[i].person.adress.town === town && 
+            data[i].person.adress.street === street && 
+            data[i].person.adress.number === number && 
+            data[i].person.adress.apartment === apartment) {
+          result = data[i].person.adress;
+        }
+      }
+      if (result) {
+        return result;
+      }           
+      result = {
+        town: town,
+        street: street,
+        number: number,
+        apartment: apartment
+      };
+      return result;
+    };        
         
-        var validateParams = function (params) {
-            console.log("Validating params");
-            console.log(
-                    (params.soname && params.soname.match(/^(.*[a-zA-Z ])$/)) && 
-                    (params.appartment && params.appartment.match(/[0-9]/)) && 
-                    (params.name && params.name.match(/^(.*[a-zA-Z ])$/))                    
-                    );
-            return (
-                    (params.soname && params.soname.match(/^(.*[a-zA-Z ])$/)) && 
-                    (params.appartment && params.appartment.match(/[0-9]/)) && 
-                    (params.name && params.name.match(/^(.*[a-zA-Z ])$/))
-                );
-        };
+    var getPersonByNameAndSoname = function (name,soname) {
+      var result = null;
+      for(var i = 0; i < data.length; ++i) {
+        if (data[i].person.name === name && data[i].person.soname === soname) {
+          result = data[i].person;
+        }
+      }
+      if (result) {
+        return result;
+      }           
+      result = {                
+        name: name,
+        soname: soname
+      };
+      return result;
+    };
 
-        var getAdressByTownStreetNumberAndApartment = function (town,street,number,apartment) {
-            var result = null;
-            for(var i = 0; i < data.length; ++i) {
-                if (data[i].person.adress.town === town && data[i].person.adress.street === street && data[i].person.adress.number === number && data[i].person.adress.apartment === apartment) {
-                    result = data[i].person.adress;
-                }
-            }
-            if (result) {
-                return result;
-            }            
-            result = {
-                town: town,
-                street: street,
-                number: number,
-                apartment: apartment
-            };
-          return result;
-        };        
-        
-        var getPersonByNameAndSoname = function (name,soname) {
-            var result = null;
-
-            for(var i = 0; i < data.length; ++i) {
-                if (data[i].person.name === name && data[i].person.soname === soname) {
-                    result = data[i].person;
-                }
-            }
-            if (result) {
-                return result;
-            }            
-            result = {                
-                name: name,
-                soname: soname
-            };
-          return result;
-        };
-
-        var getCostByDate = function(){
-          var result = null; 
-          var year = {"0":"2015"};         
-          var month = {"0":"0","1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0"};
-            for(var i = 0; i < data.length; ++i) {
-                if (data[i].cost.date === month && data[i].cost.date === year) {
-                    result = data[i].cost.date;
-                }
-            }
-            if (result) {
-                return result;
-            }            
-            result = {
-              year: year,                
-              month: month
-            };
-          return result;
-        };  
-        var getCostByWather = function(){
-          var result = null; 
-          var cold = {"0":"0","1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0"};       
-          var hot = {"0":"0","1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0"};
-            for(var i = 0; i < data.length; ++i) {
-                if (data[i].cost.wather === cold && data[i].cost.wather === hot) {
-                    result = data[i].cost.wather;
-                }
-            }
-            if (result) {
-                return result;
-            }            
-            result = {
-              cold: cold,                
-              hot: hot
-            };
-          return result;
-        };  
-        var getCostByGasAndEnergy = function(){
-          var result = null;          
-          var arr = {"0":"0","1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0"};
-            for(var i = 0; i < data.length; ++i) {
-                if (data[i].cost.gas === arr && data[i].cost.energy === arr) {
-                    result = data[i].cost;
-                }
-            }
-            if (result) {
-                return result;
-            }            
-            result = {                
-                gas: arr,
-                energy: arr
-            };
-          return result;
-        };        
-        
+    var getCostByDate = function(){
+      var result = null; 
+      var year = {"0":"2015"};         
+      var month = {"0":"1","1":"2","2":"3","3":"4","4":"5","5":"6","6":"7","7":"8","8":"9","9":"10","10":"11","11":"12"};
+      for(var i = 0; i < data.length; ++i) {
+        if (data[i].cost.date === month && data[i].cost.date === year) {
+          result = data[i].cost.date;
+        }
+      }
+      if (result) {
+        return result;
+      }           
+      result = {
+        year: year,                
+        month: month
+      };
+      return result;
+    };  
+    
+    var getCostByWather = function(){
+      var result = null; 
+      var cold = {"0":"0","1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0"};       
+      var hot = {"0":"0","1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0"};
+      for(var i = 0; i < data.length; ++i) {
+        if (data[i].cost.wather === cold && data[i].cost.wather === hot) {
+          result = data[i].cost.wather;
+        }
+      }
+      if (result) {
+        return result;
+      }           
+      result = {
+        cold: cold,                
+        hot: hot
+      };
+      return result;
+    };  
+    
+    var getCostByGasAndEnergy = function(){
+      var result = null;          
+      var arr = {"0":"0","1":"0","2":"0","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0"};
+      for(var i = 0; i < data.length; ++i) {
+        if (data[i].cost.gas === arr && data[i].cost.energy === arr) {
+          result = data[i].cost;
+        }
+      }
+      if (result) {
+        return result;
+      }            
+      result = {                
+        gas: arr,
+        energy: arr
+      };
+      return result;
+    };        
 
     var addRecord = function (record) {            
-            if (!validateParams(record)) {
-                //logger.logError("Wrong params: " + JSON.stringify(record));
-                return null;
-            }
-            data.push(prepareRecord(record));            
-            try {
-                fs.writeFileSync(
-                    dbFilePath, 
-                    JSON.stringify(data), 
-                    { flag: 'w+' }
-                );   
-                data = getDataFromFile(dbFilePath);
-            } catch(e) {
-                //logger.logError('Failed saving data to file, data: ' + 
-                        //JSON.stringify(record));
-                return false;
-            }
-            return true;
-        };
+      if (!validateParams(record)) {        
+        return null;
+      }
+      data.push(prepareRecord(record));            
+      try {
+        fs.writeFileSync(
+          dbFilePath, 
+          JSON.stringify(data), 
+          { flag: 'w+' }
+        );   
+        data = getDataFromFile(dbFilePath);
+      } catch(e) {
+        return false;
+      }
+      return true;
+    };
 
     return {
         displayAll: displayAll, 
@@ -610,7 +617,8 @@ module.exports = (function () {
         searchByCustomer: searchByCustomer,
         getAverageOfGasAll: getAverageOfGasAll,
         getAverageOfGasPerson: getAverageOfGasPerson,
-        addRecord: addRecord
+        addRecord: addRecord,
+        addRecordDate: addRecordDate
     };
 
 })();
