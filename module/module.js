@@ -46,8 +46,8 @@ module.exports = (function () {
     var getAverageOfGasAll = function(){
       var result = [];  
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {                 
-          result.push(parseInt(_.sum(data[i].cost.gas[j]) / 12));
+        for (var j = 0; j < Object.keys(data[i].cost.gas).length; ++j) {                 
+          result.push(parseInt(_.sum(data[i].cost.gas[j]) / Object.keys(data[i].cost.gas).length));
         }
       }
       return result;               
@@ -55,8 +55,8 @@ module.exports = (function () {
     var getAverageOfEnergyAll = function(){
       var result = [];  
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {                 
-          result.push(parseInt(_.sum(data[i].cost.energy[j]) / 12));
+        for (var j = 0; j < Object.keys(data[i].cost.energy).length; ++j) {                 
+          result.push(parseInt(_.sum(data[i].cost.energy[j]) / Object.keys(data[i].cost.energy).length));
         }
       }
       return result;               
@@ -64,8 +64,8 @@ module.exports = (function () {
     var getAverageOfWatherColdAll = function(){
       var result = [];  
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {                 
-          result.push(parseInt(_.sum(data[i].cost.wather.cold[j]) / 12));
+        for (var j = 0; j < Object.keys(data[i].cost.wather.cold).length; ++j) {                 
+          result.push(parseInt(_.sum(data[i].cost.wather.cold[j]) / Object.keys(data[i].cost.wather.cold).length));
         }
       }
       return result;               
@@ -73,8 +73,8 @@ module.exports = (function () {
     var getAverageOfWatherHotAll = function(){
       var result = [];  
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {                 
-          result.push(parseInt(_.sum(data[i].cost.wather.hot[j]) / 12));
+        for (var j = 0; j < Object.keys(data[i].cost.wather.hot).length; ++j) {                 
+          result.push(parseInt(_.sum(data[i].cost.wather.hot[j]) / Object.keys(data[i].cost.wather.hot).length));
         }
       }
       return result;               
@@ -83,7 +83,7 @@ module.exports = (function () {
     var getAverageOfGasPerson = function(id){        
       var result = [];     
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {
+        for (var j = 0; j < Object.keys(data[i].cost.gas).length; ++j) {
           if(data[i].id == parseInt(id)) {               
             result.push(data[i].cost.gas[j]);
           }
@@ -94,7 +94,7 @@ module.exports = (function () {
     var getAverageOfEnergyPerson = function(id){        
       var result = [];     
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {
+        for (var j = 0; j < Object.keys(data[i].cost.energy).length; ++j) {
           if(data[i].id == parseInt(id)) {               
             result.push(data[i].cost.energy[j]);
           }
@@ -105,7 +105,7 @@ module.exports = (function () {
     var getAverageOfWatherColdPerson = function(id){        
       var result = [];     
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {
+        for (var j = 0; j < Object.keys(data[i].cost.wather.cold).length; ++j) {
           if(data[i].id == parseInt(id)) {              
             result.push(data[i].cost.wather.cold[j]);
           }
@@ -116,7 +116,7 @@ module.exports = (function () {
     var getAverageOfWatherHotPerson = function(id){        
       var result = [];     
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {
+        for (var j = 0; j < Object.keys(data[i].cost.wather.hot).length; ++j) {
           if(data[i].id == parseInt(id)) {               
             result.push(data[i].cost.wather.hot[j]);
           }
@@ -127,7 +127,7 @@ module.exports = (function () {
     var getDateOfPerson = function(id){        
       var result = [];        
       for (var i = 0; i < data.length; ++i) {
-        for (var j = 0; j < 12; ++j) {
+        for (var j = 0; j < Object.keys(data[i].cost.date.month).length; ++j) {
           if(data[i].id == parseInt(id)) {            
             result.push(data[i].cost.date.year[0]+'.'+data[i].cost.date.month[j]);
           }
