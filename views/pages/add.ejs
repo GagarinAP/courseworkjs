@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+  <title><%= title %></title>
+</head>
+
+<body>
+<% include ../partials/nav.ejs %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <a href="/" class="lang-logo">
+        <img src="img/lang-logo.png">
+      </a>     
+    </div>
+  </div>
+<div class="container">
+  <div class="alert alert-info text-center" role="alert">
+    Форма дозволяє додати власника та номер квартири.
+  </div>
+  <hr>
+  <div class="row">  
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content text-center">
+          <p><div id="post-record-message"></div></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <form class="form" role="form" method="POST" action="record">        
+        <div class="form-group">
+          <label class="control-label">Імя</label>
+          <input type="text" class="form-control" name="nameuser">          
+          <label class="control-label">Фамілія</label>
+          <input type="text" class="form-control" name="soname">         
+          <label class="control-label">Номер квартири</label>
+          <input type="text" class="form-control" name="appartment">          
+        </div>
+        <div type="submit" data-toggle="modal" data-target=".bs-example-modal-sm" role="button" class="btn btn-primary" onclick="window.moduleApp.addRecord()">Додати</div>
+      </form>
+    </div>
+  </div>     
+</div>
+<% include ../partials/footer.ejs %>
+<% include ../partials/scripts.ejs %>
+</body>
+</html>

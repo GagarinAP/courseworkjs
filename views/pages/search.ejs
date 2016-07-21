@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>  
+  <% include ../partials/header.ejs %>
+  <title><%= title %></title>
+</head>
+<body>
+<% include ../partials/nav.ejs %>
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="img/lang-logo.png">
+    </a>
+    <h1>Сторінка результатів пошуку</h1>       
+  </div>
+</div>
+<div class="container">  
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="search"></div>
+    </div>
+  </div>
+  <hr>  
+</div>
+<% include ../partials/footer.ejs %>
+<% include ../partials/scripts.ejs %>
+</body>
+</html>

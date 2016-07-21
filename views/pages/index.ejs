@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>  
+  <% include ../partials/header.ejs %>
+  <title><%= title %></title>
+</head>
+<body>
+<% include ../partials/nav.ejs %>
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="img/lang-logo.png">      
+    </a>
+    <h1>ОСББ</h1>
+    <h3>в м.Рівне по вул.Міцкевича 32</h3>
+    <p>Статистика та моніторинг витрат користувачами будинку: газу, електроенергії, гарячої та холодної води...</p>  
+  </div>
+</div>
+<div class="container">
+  <div class="alert alert-info text-center" role="alert">
+    Графіки показують витрати газу, електроенергії чи води по всіх <a href="/users">квартирах</a>, а також персонально по кожному власнику квартири!
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <canvas id="appartment-chart-gas" width="1200" height="400"></canvas>
+      <canvas id="appartment-chart-energy" width="1200" height="400"></canvas>
+      <canvas id="appartment-chart-wather" width="1200" height="400"></canvas>
+    </div>
+  </div>  
+</div>
+<% include ../partials/footer.ejs %>
+<% include ../partials/scripts.ejs %>
+</body>
+</html>
